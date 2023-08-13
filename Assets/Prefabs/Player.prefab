@@ -569,7 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8df88ede12582941af5a9f33c446ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraClampAngle: 45
+  CameraClampAngle: 60
   CameraDistanceX: 3
   CameraDistanceXAiming: 1
   CameraDistanceY: 1.3
@@ -593,6 +593,7 @@ GameObject:
   - component: {fileID: 758069334}
   - component: {fileID: 758069336}
   - component: {fileID: 1410788122}
+  - component: {fileID: 1410788129}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -681,7 +682,7 @@ MonoBehaviour:
   m_ParasolMoveSpeed: 2.5
   m_JumpForce: 20
   m_ParasolGravityScale: 0.15
-  m_GroundCheckLength: 0.55
+  m_GroundCheckLength: 0.3
   m_PlayerLook: {fileID: 221530451}
 --- !u!114 &758069334
 MonoBehaviour:
@@ -695,11 +696,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94a077330d5ef94fbec71dd54124a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_WindDistanceToPlayer: 2.5
+  m_AimedWindDistanceToPlayer: 2.5
+  m_UpwardWindDistanceToPlayer: 0.9
+  m_HorizontalWindDistanceToPlayer: 2.5
+  m_UpwardWindOffsetY: 2.25
+  m_HorizontalWindOffsetY: 0.3
   m_PlayerLook: {fileID: 221530451}
+  m_PlayerParasol: {fileID: 758069336}
+  m_PlayerAnimator: {fileID: 1410788129}
   m_FanMeshRenderer: {fileID: 8733610128209052750}
   m_WindObject: {fileID: 4893685204624751051, guid: 2c4eaf7029f74244393b2457b0cf37d7, type: 3}
-  m_TempFanBlowAnimation: {fileID: 8733610128209052736}
 --- !u!114 &758069336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,6 +732,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_WindStrengthMultiplier: 1
+--- !u!95 &1410788129
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8045306391045990123}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0f199fec5b440f54f83e7cc5c02fd43a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &8733610128209052747
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,7 +763,6 @@ GameObject:
   - component: {fileID: 8733610128209052748}
   - component: {fileID: 8733610128209052751}
   - component: {fileID: 8733610128209052750}
-  - component: {fileID: 8733610128209052736}
   m_Layer: 0
   m_Name: Fan
   m_TagString: Untagged
@@ -754,7 +779,7 @@ Transform:
   m_GameObject: {fileID: 8733610128209052747}
   m_LocalRotation: {x: -0.11008471, y: -0.532703, z: -0.070131704, w: 0.8361761}
   m_LocalPosition: {x: -0.9, y: 0.15, z: 2}
-  m_LocalScale: {x: 0.1, y: 2.75, z: 3}
+  m_LocalScale: {x: 0.1, y: 2.25, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1814896452}
@@ -810,19 +835,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!111 &8733610128209052736
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8733610128209052747}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: fa360e6f3df2cd74d8dde050683f3bfd, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: fa360e6f3df2cd74d8dde050683f3bfd, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0

@@ -148,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!m_PlayerParasol.IsParasolOpen)
         {
-            m_PlayerRigidbody.AddForce(new Vector3(0, m_OriginalGravity * m_ParasolGravityScale, 0), ForceMode.Acceleration);
+            m_PlayerRigidbody.AddForce(new Vector3(0, m_OriginalGravity, 0), ForceMode.Acceleration);
         }
     }
 
