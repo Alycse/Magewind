@@ -4923,5 +4923,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6702a7666628b546a5701f5bb48dc6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WindStrength: 60
+  WindStrength: 20
   BoxColliderAdjustmentSpeed: 9
