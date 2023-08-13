@@ -4924,4 +4924,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WindStrength: 60
-  BoxColliderAdjustmentSpeed: 10
+  BoxColliderAdjustmentSpeed: 9

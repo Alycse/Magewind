@@ -1860,24 +1860,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1384690427}
   m_CullTransparentMesh: 1
---- !u!1 &1410788114 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8045306391045990123, guid: 5a406c35ba625ef49831429ac9b6d229, type: 3}
-  m_PrefabInstance: {fileID: 5974791641631410600}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1410788122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1410788114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 041925072f5807e4f8e9201afecc748c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_WindStrengthMultiplier: 1
 --- !u!1 &1415784678
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,10 +3298,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6982812147933622153, guid: 5a406c35ba625ef49831429ac9b6d229, type: 3}
-      propertyPath: m_WindBlowSpeedMultiplier
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7272604376173755473, guid: 5a406c35ba625ef49831429ac9b6d229, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -3371,10 +3349,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8045306391045990123, guid: 5a406c35ba625ef49831429ac9b6d229, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1410788122}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a406c35ba625ef49831429ac9b6d229, type: 3}
 --- !u!4 &7969352951036619981
 Transform:

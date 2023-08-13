@@ -569,13 +569,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8df88ede12582941af5a9f33c446ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MouseSensitivity: 200
   CameraClampAngle: 45
-  CameraDistanceX: 2.7
-  CameraDistanceXAiming: 0.75
+  CameraDistanceX: 3
+  CameraDistanceXAiming: 1
   CameraDistanceY: 1.3
   CameraDistanceOffset: 0.24
-  CameraAimDistanceChangeSpeed: 10
+  CameraAimOffsetX: 0.16
+  CameraAimPositionChangeSpeed: 10
   PlayerBodyTransformRotationSpeed: 15
   m_PlayerBodyTransform: {fileID: 1814896452}
 --- !u!1 &8045306391045990123
@@ -592,6 +592,7 @@ GameObject:
   - component: {fileID: 6982812147933622153}
   - component: {fileID: 758069334}
   - component: {fileID: 758069336}
+  - component: {fileID: 1410788122}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -614,7 +615,7 @@ Transform:
   - {fileID: 3371528829080903660}
   - {fileID: 1814896452}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6982812147933622150
 Rigidbody:
@@ -679,7 +680,6 @@ MonoBehaviour:
   m_MoveSpeed: 2.5
   m_ParasolMoveSpeed: 2.5
   m_JumpForce: 20
-  m_WindAcceleration: 60
   m_ParasolGravityScale: 0.15
   m_GroundCheckLength: 0.55
   m_PlayerLook: {fileID: 221530451}
@@ -713,6 +713,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ParasolMeshRenderer: {fileID: 1862992893}
+--- !u!114 &1410788122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8045306391045990123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041925072f5807e4f8e9201afecc748c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_WindStrengthMultiplier: 1
 --- !u!1 &8733610128209052747
 GameObject:
   m_ObjectHideFlags: 0

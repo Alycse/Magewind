@@ -28,7 +28,10 @@ public class PlayerLook : MonoBehaviour
     private float CameraDistanceOffset;
 
     [SerializeField]
-    private float CameraAimDistanceChangeSpeed;
+    private float CameraAimOffsetX;
+
+    [SerializeField]
+    private float CameraAimPositionChangeSpeed;
 
     [SerializeField]
     private float PlayerBodyTransformRotationSpeed;
@@ -49,6 +52,7 @@ public class PlayerLook : MonoBehaviour
     private float m_CurCameraDistanceX;
     private float m_CurLookVerticalRotation;
     private float m_CurLookHorizontalRotation;
+    private float m_CurrentAimOffsetX;
     private Quaternion m_TargetPlayerBodyTransformRotation;
 
     //Initialization Methods
@@ -73,8 +77,6 @@ public class PlayerLook : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-
         Vector3 localRotation = transform.localRotation.eulerAngles;
         m_CurLookVerticalRotation = localRotation.x;
         m_CurLookHorizontalRotation = localRotation.y;
@@ -129,10 +131,15 @@ public class PlayerLook : MonoBehaviour
             cameraDistanceXToUse = CameraDistanceX;
         }
 
-        m_CurCameraDistanceX = Mathf.Lerp(m_CurCameraDistanceX, cameraDistanceXToUse, Time.deltaTime * CameraAimDistanceChangeSpeed);
+        m_CurCameraDistanceX = Mathf.Lerp(m_CurCameraDistanceX, cameraDistanceXToUse, Time.deltaTime * CameraAimPositionChangeSpeed);
 
         float distanceToBody = Mathf.Lerp(m_CurCameraDistanceX, CameraDistanceY, m_CurLookVerticalRotation / CameraClampAngle);
-        transform.position = m_PlayerBodyTransform.position - transform.forward * distanceToBody + Vector3.up * CameraDistanceOffset;
+
+        float targetAimOffsetX = IsAiming ? CameraAimOffsetX : 0f;
+        m_CurrentAimOffsetX = Mathf.Lerp(m_CurrentAimOffsetX, targetAimOffsetX, Time.deltaTime * CameraAimPositionChangeSpeed);
+        Vector3 aimingOffset = transform.right * m_CurrentAimOffsetX;
+
+        transform.position = m_PlayerBodyTransform.position - transform.forward * distanceToBody + Vector3.up * CameraDistanceOffset + aimingOffset;
     }
 
     private void UpdateRotation()
