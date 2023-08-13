@@ -39,7 +39,7 @@ public class Blowable : MonoBehaviour
 
     //Play Methods
 
-    private void Awake ()
+    protected void Awake ()
 	{
 		GetReferences();
 		SubscribeToEvents();
