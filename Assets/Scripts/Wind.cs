@@ -12,7 +12,13 @@ public class Wind : MonoBehaviour
     public float WindStrength;
 
     [SerializeField]
-    private float BoxColliderAdjustmentSpeed;
+    private float m_BoxColliderAdjustmentSpeed;
+
+    [SerializeField]
+    private float m_WindLifeSpan;
+
+    [SerializeField]
+    private ParticleSystem m_ParticleSystem;
 
     //References
 
@@ -34,6 +40,7 @@ public class Wind : MonoBehaviour
 
     private float m_BoxColliderTargetZSize;
     private float m_CurBoxColliderZSize;
+    private float m_CurWindLifeSpan;
 
     //Initialization Methods
 
@@ -59,11 +66,13 @@ public class Wind : MonoBehaviour
     {
         m_BoxColliderTargetZSize = m_BoxCollider.size.z;
         m_CurBoxColliderZSize = 0.0f;
+        m_CurWindLifeSpan = m_WindLifeSpan;
     }
 
     private void Update()
     {
         UpdateBoxColliderSizeAdjustment();
+        UpdateLifeSpan();
     }
 
     //Public Methods
@@ -72,7 +81,7 @@ public class Wind : MonoBehaviour
 
     private void UpdateBoxColliderSizeAdjustment()
     {
-        m_CurBoxColliderZSize = Mathf.Clamp(m_CurBoxColliderZSize + (BoxColliderAdjustmentSpeed * Time.deltaTime), 0.0f, m_BoxColliderTargetZSize);
+        m_CurBoxColliderZSize = Mathf.Clamp(m_CurBoxColliderZSize + (m_BoxColliderAdjustmentSpeed * Time.deltaTime), 0.0f, m_BoxColliderTargetZSize);
 
         Vector3 newBoxColliderSize = m_BoxCollider.size;
         newBoxColliderSize.z = m_CurBoxColliderZSize;
@@ -81,6 +90,24 @@ public class Wind : MonoBehaviour
         Vector3 newBoxColliderCenter = m_BoxCollider.center;
         newBoxColliderCenter.z = -m_BoxColliderTargetZSize / 2.0f + m_CurBoxColliderZSize / 2.0f;
         m_BoxCollider.center = newBoxColliderCenter;
+    }
+
+    private void UpdateLifeSpan()
+    {
+        if(m_CurWindLifeSpan > 0.0f)
+        {
+            m_CurWindLifeSpan -= Time.deltaTime;
+        }
+        else
+        {
+            DisableWind();
+        }
+    }
+
+    private void DisableWind()
+    {
+        m_BoxCollider.enabled = false;
+        m_ParticleSystem.Stop();
     }
 
 }

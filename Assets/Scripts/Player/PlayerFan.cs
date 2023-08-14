@@ -23,6 +23,9 @@ public class PlayerFan : MonoBehaviour
     [SerializeField]
     private float m_HorizontalWindOffsetY;
 
+    [SerializeField]
+    private AudioSource m_ProduceWindSound;
+
     //References
 
     [Header("References")]
@@ -112,6 +115,8 @@ public class PlayerFan : MonoBehaviour
         Instantiate(m_WindObject, windPosition, windRotation);
 
         m_PlayerAnimator.SetTrigger("ProduceHorizontalWind");
+
+        m_ProduceWindSound.Play();
     }
 
     private void ProduceUpwardWind()
@@ -133,6 +138,8 @@ public class PlayerFan : MonoBehaviour
 
         // Play the appropriate animation for the player, if there's any specific for upward wind.
         m_PlayerAnimator.SetTrigger("ProduceUpwardWind");
+
+        m_ProduceWindSound.Play();
     }
 
     private void ProduceHorizontalWind()
@@ -157,6 +164,8 @@ public class PlayerFan : MonoBehaviour
 
         // Play the appropriate animation for the player.
         m_PlayerAnimator.SetTrigger("ProduceHorizontalWind");
+
+        m_ProduceWindSound.Play();
     }
 
     private void HideFan()
