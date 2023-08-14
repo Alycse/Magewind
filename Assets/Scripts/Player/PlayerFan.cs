@@ -140,6 +140,8 @@ public class PlayerFan : MonoBehaviour
         m_PlayerAnimator.SetTrigger("ProduceUpwardWind");
 
         m_ProduceWindSound.Play();
+
+        Debug.Log("play");
     }
 
     private void ProduceHorizontalWind()
