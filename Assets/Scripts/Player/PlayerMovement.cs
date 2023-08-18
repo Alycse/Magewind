@@ -120,8 +120,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (!m_PlayerParasol.IsParasolOpen || m_IsGrounded)
             {
-                bool isFalling = m_PlayerRigidbody.velocity.y < 0.0f;
-                m_PlayerRigidbody.MovePosition(m_PlayerRigidbody.position + MovementInput * (isFalling ? m_FallingMoveSpeed : m_MoveSpeed) * Time.deltaTime);
+                m_PlayerRigidbody.MovePosition(m_PlayerRigidbody.position + MovementInput * m_MoveSpeed * Time.deltaTime);
             }
 
             if (!m_PlayerParasol.IsParasolOpen && !m_PlayerBlowable.IsInWind())
@@ -141,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
             m_PlayerBodyAnimator.SetBool("isRunning", false);
         }
 
-        if(m_PlayerRigidbody.velocity.y != 0.0f)
+        if(Mathf.Abs(m_PlayerRigidbody.velocity.y) >= 0.001f || !m_IsGrounded)
         {
             m_PlayerBodyAnimator.SetBool("inAir", true);
         }
