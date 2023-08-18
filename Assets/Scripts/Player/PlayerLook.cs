@@ -42,6 +42,12 @@ public class PlayerLook : MonoBehaviour
     [SerializeField]
     private Transform m_PlayerBodyTransform;
 
+    [SerializeField]
+    private Rigidbody m_PlayerRigidbody;
+
+    [SerializeField]
+    private PlayerMovement m_PlayerMovement;
+
     //Public Fields
 
     public bool IsAiming { get; private set; }
@@ -100,7 +106,15 @@ public class PlayerLook : MonoBehaviour
     {
         if (m_PlayerBodyTransform != null)
         {
-            m_TargetPlayerBodyTransformRotation = Quaternion.Euler(0.0f, m_CurLookHorizontalRotation, 0.0f);
+            // Combine the movement inputs and the rigidbody's velocity
+            Vector3 combinedMovement = m_PlayerRigidbody.velocity + m_PlayerMovement.MovementInput;
+
+            combinedMovement.y = 0.0f;
+
+            if (combinedMovement.magnitude > 0.1f) // Only change rotation if there's noticeable movement
+            {
+                m_TargetPlayerBodyTransformRotation = Quaternion.LookRotation(combinedMovement.normalized);
+            }
         }
     }
 

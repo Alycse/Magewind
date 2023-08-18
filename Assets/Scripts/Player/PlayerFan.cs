@@ -37,7 +37,7 @@ public class PlayerFan : MonoBehaviour
     private PlayerParasol m_PlayerParasol;
 
     [SerializeField]
-    private Animator m_PlayerAnimator;
+    private Animator m_PlayerBodyAnimator;
 
     [SerializeField]
     private MeshRenderer m_FanMeshRenderer;
@@ -114,7 +114,7 @@ public class PlayerFan : MonoBehaviour
 
         Instantiate(m_WindObject, windPosition, windRotation);
 
-        m_PlayerAnimator.SetTrigger("ProduceHorizontalWind");
+        //m_BodyAnimator.SetTrigger("ProduceHorizontalWind");
 
         m_ProduceWindSound.Play();
     }
@@ -137,7 +137,7 @@ public class PlayerFan : MonoBehaviour
         Instantiate(m_WindObject, windPosition, windRotation);
 
         // Play the appropriate animation for the player, if there's any specific for upward wind.
-        m_PlayerAnimator.SetTrigger("ProduceUpwardWind");
+        //m_BodyAnimator.SetTrigger("ProduceUpwardWind");
 
         m_ProduceWindSound.Play();
     }
@@ -163,7 +163,7 @@ public class PlayerFan : MonoBehaviour
         Instantiate(m_WindObject, windPosition, windRotation);
 
         // Play the appropriate animation for the player.
-        m_PlayerAnimator.SetTrigger("ProduceHorizontalWind");
+        //m_BodyAnimator.SetTrigger("ProduceHorizontalWind");
 
         m_ProduceWindSound.Play();
     }

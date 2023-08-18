@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     private float m_MoveSpeed;
 
     [SerializeField]
+    private float m_FallingMoveSpeed;
+
+    [SerializeField]
     private float m_ParasolMoveSpeed;
 
     [SerializeField]
@@ -24,12 +27,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float m_GroundCheckLength;
 
+    [SerializeField]
+    float m_SlideAnimationVelocityOffset;
+
     //References
 
     [Header("References")]
 
     [SerializeField]
     private PlayerLook m_PlayerLook;
+
+    [SerializeField]
+    private Animator m_PlayerBodyAnimator;
 
     private Rigidbody m_PlayerRigidbody;
     private PlayerParasol m_PlayerParasol;
@@ -39,9 +48,10 @@ public class PlayerMovement : MonoBehaviour
 
     //Public Fields
 
+    public Vector3 MovementInput { private set; get; }
+
     //Private Fields
 
-    private Vector3 m_MovementInput;
     private bool m_IsGrounded;
     private float m_OriginalGravity;
 
@@ -100,23 +110,44 @@ public class PlayerMovement : MonoBehaviour
         float inputHorizontal = Input.GetAxis("Horizontal");
         float inputVertical = Input.GetAxis("Vertical");
 
-        m_MovementInput = cameraForward * inputVertical + cameraRight * inputHorizontal;
+        MovementInput = cameraForward * inputVertical + cameraRight * inputHorizontal;
 
         m_IsGrounded = Physics.Raycast(transform.position, Vector3.down, m_GroundCheckLength);
 
-        if (m_MovementInput != Vector3.zero)
+        if (MovementInput != Vector3.zero)
         {
             m_PlayerLook.RotateBodyToForward();
 
             if (!m_PlayerParasol.IsParasolOpen || m_IsGrounded)
             {
-                m_PlayerRigidbody.MovePosition(m_PlayerRigidbody.position + m_MovementInput * m_MoveSpeed * Time.deltaTime);
+                bool isFalling = m_PlayerRigidbody.velocity.y < 0.0f;
+                m_PlayerRigidbody.MovePosition(m_PlayerRigidbody.position + MovementInput * (isFalling ? m_FallingMoveSpeed : m_MoveSpeed) * Time.deltaTime);
             }
 
             if (!m_PlayerParasol.IsParasolOpen && !m_PlayerBlowable.IsInWind())
             {
                 m_PlayerRigidbody.velocity = new Vector3(0.0f, m_PlayerRigidbody.velocity.y, 0.0f);
             }
+        }
+
+        if (MovementInput.x != 0.0f || MovementInput.z != 0.0f
+            || Mathf.Abs(m_PlayerRigidbody.velocity.x) >= m_SlideAnimationVelocityOffset || Mathf.Abs(m_PlayerRigidbody.velocity.z) >= m_SlideAnimationVelocityOffset)
+        {
+            m_PlayerBodyAnimator.SetBool("isRunning", true);
+            m_PlayerLook.RotateBodyToForward();
+        }
+        else if (Mathf.Abs(m_PlayerRigidbody.velocity.x) < m_SlideAnimationVelocityOffset && Mathf.Abs(m_PlayerRigidbody.velocity.z) < m_SlideAnimationVelocityOffset)
+        {
+            m_PlayerBodyAnimator.SetBool("isRunning", false);
+        }
+
+        if(m_PlayerRigidbody.velocity.y != 0.0f)
+        {
+            m_PlayerBodyAnimator.SetBool("inAir", true);
+        }
+        else
+        {
+            m_PlayerBodyAnimator.SetBool("inAir", false);
         }
     }
 
@@ -130,11 +161,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateParasolMovement()
     {
-        if (m_MovementInput != Vector3.zero)
+        if (MovementInput != Vector3.zero)
         {
             if (m_PlayerParasol.IsParasolOpen && !m_IsGrounded)
             {
-                m_PlayerRigidbody.AddForce(m_MovementInput * m_ParasolMoveSpeed, ForceMode.Acceleration);
+                m_PlayerRigidbody.AddForce(MovementInput * m_ParasolMoveSpeed, ForceMode.Acceleration);
             }
         }
     }
