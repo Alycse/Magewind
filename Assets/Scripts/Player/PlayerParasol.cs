@@ -12,7 +12,10 @@ public class PlayerParasol : MonoBehaviour
     [Header("References")]
 
     [SerializeField]
-    private MeshRenderer m_ParasolMeshRenderer;
+    private MeshRenderer m_OpenedParasolMeshRenderer;
+
+    [SerializeField]
+    private MeshRenderer m_ClosedParasolMeshRenderer;
 
     //Events
 
@@ -71,12 +74,14 @@ public class PlayerParasol : MonoBehaviour
     private void OpenParasol()
     {
         IsParasolOpen = true;
-        m_ParasolMeshRenderer.enabled = true;
+        m_OpenedParasolMeshRenderer.enabled = true;
+        m_ClosedParasolMeshRenderer.enabled = false;
     }
 
     private void CloseParasol()
     {
         IsParasolOpen = false;
-        m_ParasolMeshRenderer.enabled = false;
+        m_OpenedParasolMeshRenderer.enabled = false;
+        m_ClosedParasolMeshRenderer.enabled = true;
     }
 }

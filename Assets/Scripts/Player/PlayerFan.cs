@@ -104,68 +104,54 @@ public class PlayerFan : MonoBehaviour
         }
     }
 
-    private void ProduceAimedWind()
+    private void ProduceWind()
     {
         m_PlayerLook.RotateBodyToForward();
+        m_PlayerBodyAnimator.SetTrigger("ProduceHorizontalWind");
+        m_ProduceWindSound.Play();
+    }
 
+    private void ProduceAimedWind()
+    {
         Quaternion windRotation = m_PlayerLook.transform.rotation;
         Vector3 offsetFromPlayer = m_PlayerLook.transform.forward * m_AimedWindDistanceToPlayer;
         Vector3 windPosition = transform.position + offsetFromPlayer;
 
         Instantiate(m_WindObject, windPosition, windRotation);
 
-        //m_BodyAnimator.SetTrigger("ProduceHorizontalWind");
-
-        m_ProduceWindSound.Play();
+        ProduceWind();
     }
 
     private void ProduceUpwardWind()
     {
-        m_PlayerLook.RotateBodyToForward();
+        Quaternion windRotation = Quaternion.Euler(-90, 0, 0);
 
-        // Set the wind rotation to face upwards.
-        Quaternion windRotation = Quaternion.Euler(-90, 0, 0); // This rotation makes sure the wind faces upwards. Adjust as needed.
-
-        // Set the position right in front of where the player is looking, based on the specified distance.
         Vector3 playerLookForward = m_PlayerLook.transform.forward;
         playerLookForward.y = 0.0f;
         Vector3 offsetFromPlayer = playerLookForward * m_UpwardWindDistanceToPlayer;
         Vector3 windPosition = transform.position + offsetFromPlayer;
         windPosition.y += m_UpwardWindOffsetY;
 
-        // Instantiate the wind object.
         Instantiate(m_WindObject, windPosition, windRotation);
 
-        // Play the appropriate animation for the player, if there's any specific for upward wind.
-        //m_BodyAnimator.SetTrigger("ProduceUpwardWind");
-
-        m_ProduceWindSound.Play();
+        ProduceWind();
     }
 
     private void ProduceHorizontalWind()
     {
-        m_PlayerLook.RotateBodyToForward();
-
-        // Get the horizontal forward direction where the player is looking.
         Vector3 playerLookForward = m_PlayerLook.transform.forward;
-        playerLookForward.y = 0.0f; // This ensures the direction is strictly horizontal.
-        playerLookForward.Normalize(); // Normalize to maintain consistent magnitude.
+        playerLookForward.y = 0.0f;
+        playerLookForward.Normalize();
 
-        // Get the wind position offset based on this direction.
         Vector3 offsetFromPlayer = playerLookForward * m_HorizontalWindDistanceToPlayer;
         Vector3 windPosition = transform.position + offsetFromPlayer;
         windPosition.y += m_HorizontalWindOffsetY;
 
-        // As for rotation, we can leverage Unity's LookRotation method to create a rotation that looks in a certain direction.
         Quaternion windRotation = Quaternion.LookRotation(playerLookForward);
 
-        // Instantiate the wind object.
         Instantiate(m_WindObject, windPosition, windRotation);
 
-        // Play the appropriate animation for the player.
-        //m_BodyAnimator.SetTrigger("ProduceHorizontalWind");
-
-        m_ProduceWindSound.Play();
+        ProduceWind();
     }
 
     private void HideFan()

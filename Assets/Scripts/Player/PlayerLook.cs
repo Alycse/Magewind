@@ -106,12 +106,11 @@ public class PlayerLook : MonoBehaviour
     {
         if (m_PlayerBodyTransform != null)
         {
-            // Combine the movement inputs and the rigidbody's velocity
             Vector3 combinedMovement = m_PlayerRigidbody.velocity + m_PlayerMovement.MovementInput;
 
             combinedMovement.y = 0.0f;
 
-            if (combinedMovement.magnitude > 0.1f) // Only change rotation if there's noticeable movement
+            if (combinedMovement.magnitude > 0.1f)
             {
                 m_TargetPlayerBodyTransformRotation = Quaternion.LookRotation(combinedMovement.normalized);
             }
