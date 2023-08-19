@@ -84,6 +84,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (SettingsManager.Instance.IsSettingsUIShown)
+        {
+            return;
+        }
+
         UpdateMovement();
         UpdateJump();
     }
@@ -116,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (MovementInput != Vector3.zero)
         {
-            m_PlayerLook.RotateBodyToForward();
+            m_PlayerLook.RotateBodyToMovement();
 
             if (!m_PlayerParasol.IsParasolOpen || m_IsGrounded)
             {
@@ -133,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
             || Mathf.Abs(m_PlayerRigidbody.velocity.x) >= m_SlideAnimationVelocityOffset || Mathf.Abs(m_PlayerRigidbody.velocity.z) >= m_SlideAnimationVelocityOffset)
         {
             m_PlayerBodyAnimator.SetBool("isRunning", true);
-            m_PlayerLook.RotateBodyToForward();
+            m_PlayerLook.RotateBodyToMovement();
         }
         else if (Mathf.Abs(m_PlayerRigidbody.velocity.x) < m_SlideAnimationVelocityOffset && Mathf.Abs(m_PlayerRigidbody.velocity.z) < m_SlideAnimationVelocityOffset)
         {

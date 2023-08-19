@@ -52,6 +52,11 @@ public class PlayerParasol : MonoBehaviour
 
     private void Update()
     {
+        if (SettingsManager.Instance.IsSettingsUIShown)
+        {
+            return;
+        }
+
         UpdateParasol();
     }
 
@@ -61,11 +66,11 @@ public class PlayerParasol : MonoBehaviour
 
     private void UpdateParasol()
     {
-        if (Input.GetButtonDown("OpenParasol"))
+        if (Input.GetButtonDown("OpenParasol") || Input.GetAxis("OpenParasol") > 0.0f)
         {
             OpenParasol();
         }
-        else if (Input.GetButtonUp("OpenParasol"))
+        else if (Input.GetButtonUp("OpenParasol") || Input.GetAxis("OpenParasol") == 0.0f)
         {
             CloseParasol();
         }

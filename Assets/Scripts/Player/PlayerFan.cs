@@ -34,6 +34,9 @@ public class PlayerFan : MonoBehaviour
     private PlayerLook m_PlayerLook;
 
     [SerializeField]
+    private Transform m_PlayerBodyTransform;
+
+    [SerializeField]
     private PlayerParasol m_PlayerParasol;
 
     [SerializeField]
@@ -78,6 +81,11 @@ public class PlayerFan : MonoBehaviour
 
     private void Update()
     {
+        if (SettingsManager.Instance.IsSettingsUIShown)
+        {
+            return;
+        }
+
         UpdateFan();
     }
 
@@ -106,40 +114,42 @@ public class PlayerFan : MonoBehaviour
 
     private void ProduceWind()
     {
-        m_PlayerLook.RotateBodyToForward();
+        m_PlayerLook.RotateBodyToMovement();
         m_PlayerBodyAnimator.SetTrigger("ProduceHorizontalWind");
         m_ProduceWindSound.Play();
     }
 
     private void ProduceAimedWind()
     {
+        ProduceWind();
+
         Quaternion windRotation = m_PlayerLook.transform.rotation;
         Vector3 offsetFromPlayer = m_PlayerLook.transform.forward * m_AimedWindDistanceToPlayer;
         Vector3 windPosition = transform.position + offsetFromPlayer;
 
         Instantiate(m_WindObject, windPosition, windRotation);
-
-        ProduceWind();
     }
 
     private void ProduceUpwardWind()
     {
+        ProduceWind();
+
         Quaternion windRotation = Quaternion.Euler(-90, 0, 0);
 
-        Vector3 playerLookForward = m_PlayerLook.transform.forward;
+        Vector3 playerLookForward = m_PlayerBodyTransform.transform.forward;
         playerLookForward.y = 0.0f;
         Vector3 offsetFromPlayer = playerLookForward * m_UpwardWindDistanceToPlayer;
         Vector3 windPosition = transform.position + offsetFromPlayer;
         windPosition.y += m_UpwardWindOffsetY;
 
         Instantiate(m_WindObject, windPosition, windRotation);
-
-        ProduceWind();
     }
 
     private void ProduceHorizontalWind()
     {
-        Vector3 playerLookForward = m_PlayerLook.transform.forward;
+        ProduceWind();
+
+        Vector3 playerLookForward = m_PlayerBodyTransform.transform.forward;
         playerLookForward.y = 0.0f;
         playerLookForward.Normalize();
 
@@ -150,8 +160,6 @@ public class PlayerFan : MonoBehaviour
         Quaternion windRotation = Quaternion.LookRotation(playerLookForward);
 
         Instantiate(m_WindObject, windPosition, windRotation);
-
-        ProduceWind();
     }
 
     private void HideFan()

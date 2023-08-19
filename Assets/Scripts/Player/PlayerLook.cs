@@ -95,6 +95,11 @@ public class PlayerLook : MonoBehaviour
 
     private void Update()
     {
+        if(SettingsManager.Instance.IsSettingsUIShown)
+        {
+            return;
+        }
+
         UpdateLook();
         UpdateRotation();
         UpdateAim();
@@ -102,18 +107,15 @@ public class PlayerLook : MonoBehaviour
 
     //Public Methods
 
-    public void RotateBodyToForward()
+    public void RotateBodyToMovement()
     {
-        if (m_PlayerBodyTransform != null)
+        Vector3 combinedMovement = m_PlayerRigidbody.velocity + m_PlayerMovement.MovementInput;
+
+        combinedMovement.y = 0.0f;
+
+        if (combinedMovement.magnitude > 0.1f)
         {
-            Vector3 combinedMovement = m_PlayerRigidbody.velocity + m_PlayerMovement.MovementInput;
-
-            combinedMovement.y = 0.0f;
-
-            if (combinedMovement.magnitude > 0.1f)
-            {
-                m_TargetPlayerBodyTransformRotation = Quaternion.LookRotation(combinedMovement.normalized);
-            }
+            m_TargetPlayerBodyTransformRotation = Quaternion.LookRotation(combinedMovement.normalized);
         }
     }
 
@@ -123,9 +125,11 @@ public class PlayerLook : MonoBehaviour
     {
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
+        float analogX = Input.GetAxis("Analog X");
+        float analogY = Input.GetAxis("Analog Y");
 
-        m_CurLookHorizontalRotation += mouseX * SettingsManager.Instance.MouseSensitivity * Time.deltaTime;
-        m_CurLookVerticalRotation -= mouseY * SettingsManager.Instance.MouseSensitivity * Time.deltaTime;
+        m_CurLookHorizontalRotation += (mouseX + analogX) * SettingsManager.Instance.AimSensitivity * Time.deltaTime;
+        m_CurLookVerticalRotation -= (mouseY + analogY) * SettingsManager.Instance.AimSensitivity * Time.deltaTime;
 
         m_CurLookVerticalRotation = Mathf.Clamp(m_CurLookVerticalRotation, -CameraClampAngle, CameraClampAngle);
 
@@ -161,11 +165,11 @@ public class PlayerLook : MonoBehaviour
 
     private void UpdateAim()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) || Input.GetAxis("Aim") > 0.0f)
         {
             StartAiming();
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (Input.GetMouseButtonUp(1) || Input.GetAxis("Aim") == 0.0f)
         {
             StopAiming();
         }

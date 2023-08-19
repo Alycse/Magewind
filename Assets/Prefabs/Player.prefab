@@ -3402,7 +3402,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8497007103951168477}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: f4bfad35f58e3dc4e9359eeefad410fe, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3427,7 +3427,7 @@ Rigidbody:
   m_GameObject: {fileID: 8497007103951168477}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 1
+  m_Drag: 1.5
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -3457,13 +3457,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0981da304d5f24ba9899721090ef6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MoveSpeed: 2.75
-  m_FallingMoveSpeed: 2.75
-  m_ParasolMoveSpeed: 3.5
+  m_MoveSpeed: 3
+  m_FallingMoveSpeed: 3
+  m_ParasolMoveSpeed: 4
   m_JumpForce: 3.75
   m_ParasolGravityScale: 0.25
   m_GroundCheckLength: 0.3
-  m_SlideAnimationVelocityOffset: 2
+  m_SlideAnimationVelocityOffset: 1.5
   m_PlayerLook: {fileID: 1895388138498903141}
   m_PlayerBodyAnimator: {fileID: 8132751650395726703}
 --- !u!114 &1895388139035049312
@@ -3485,6 +3485,7 @@ MonoBehaviour:
   m_HorizontalWindOffsetY: 0.35
   m_ProduceWindSound: {fileID: 1895388138235832178}
   m_PlayerLook: {fileID: 1895388138498903141}
+  m_PlayerBodyTransform: {fileID: 8132751650395726702}
   m_PlayerParasol: {fileID: 1895388139035049326}
   m_PlayerBodyAnimator: {fileID: 8132751650395726703}
   m_FanMeshRenderer: {fileID: 7167972882233196920}

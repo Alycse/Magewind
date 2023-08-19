@@ -4923,7 +4923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6702a7666628b546a5701f5bb48dc6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WindStrength: 30
+  WindStrength: 40
   m_BoxColliderAdjustmentSpeed: 9
   m_WindLifeSpan: 6
   m_ParticleSystem: {fileID: 758687103}

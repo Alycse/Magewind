@@ -13,7 +13,7 @@ public class SettingsManager : MonoBehaviour
     [Header ("Settings")]
 
 	[SerializeField]
-	private float m_DefaultMouseSensitivity;
+	private float m_DefaultAimSensitivity;
 
 	//References
 
@@ -23,17 +23,17 @@ public class SettingsManager : MonoBehaviour
     private GameObject m_SettingsUIGameObject;
 
     [SerializeField]
-	private Slider m_MouseSensitivitySlider;
+	private Slider m_AimSensitivitySlider;
 
-	//Events
+    //Events
 
-	//Public Fields
+    //Public Fields
 
-	public float MouseSensitivity { get; private set; }
+    public bool IsSettingsUIShown { get; private set; }
+
+    public float AimSensitivity { get; private set; }
 
     //Private Fields
-
-    private bool IsSettingsUIShown;
 
 	//Initialization Methods
 
@@ -44,7 +44,7 @@ public class SettingsManager : MonoBehaviour
 
     private void SubscribeToEvents ()
 	{
-        m_MouseSensitivitySlider.onValueChanged.AddListener(OnMouseSensitivitySliderChanged);
+        m_AimSensitivitySlider.onValueChanged.AddListener(OnAimSensitivitySliderChanged);
     }
 
     private void InitializeSingleton()
@@ -78,7 +78,13 @@ public class SettingsManager : MonoBehaviour
     private void Update()
 	{
         UpdateSettings();
-	}
+        UpdateAimSensitivitySlider();
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateAimSensitivitySlider();
+    }
 
     //Public Methods
 
@@ -99,11 +105,20 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+    private void UpdateAimSensitivitySlider()
+    {
+        if (IsSettingsUIShown)
+        {
+            SetAimSensitivity(m_AimSensitivitySlider.value + (Input.GetAxis("Horizontal") + Input.GetAxis("Analog X")) * 0.5f);
+        } 
+    }
+
     private void ShowSettingsUI()
     {
         IsSettingsUIShown = true;
         m_SettingsUIGameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0.0f;
     }
 
     private void HideSettingsUI()
@@ -111,40 +126,41 @@ public class SettingsManager : MonoBehaviour
         IsSettingsUIShown = false;
         m_SettingsUIGameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1.0f;
     }
 
-    private void OnMouseSensitivitySliderChanged(float newValue)
+    private void OnAimSensitivitySliderChanged(float newValue)
     {
-		SetMouseSensitivity(newValue);
+		SetAimSensitivity(newValue);
     }
 
     private void LoadSettings()
     {
-        LoadMouseSensitivity();
+        LoadAimSensitivity();
     }
 
-    private void LoadMouseSensitivity()
+    private void LoadAimSensitivity()
     {
-        if (PlayerPrefs.HasKey("MouseSensitivity"))
+        if (PlayerPrefs.HasKey("AimSensitivity"))
         {
-			SetMouseSensitivity(PlayerPrefs.GetFloat("MouseSensitivity"));
+			SetAimSensitivity(PlayerPrefs.GetFloat("AimSensitivity"));
         }
         else
         {
-            SetMouseSensitivity(m_DefaultMouseSensitivity);
+            SetAimSensitivity(m_DefaultAimSensitivity);
         }
     }
 
-    private void SaveMouseSensitivity()
+    private void SaveAimSensitivity()
     {
-        PlayerPrefs.SetFloat("MouseSensitivity", MouseSensitivity);
+        PlayerPrefs.SetFloat("AimSensitivity", AimSensitivity);
     }
 
-	private void SetMouseSensitivity(float mouseSensitivity)
+	private void SetAimSensitivity(float aimSensitivity)
     {
-        MouseSensitivity = mouseSensitivity;
-        m_MouseSensitivitySlider.value = mouseSensitivity;
-        SaveMouseSensitivity();
+        AimSensitivity = aimSensitivity;
+        m_AimSensitivitySlider.value = aimSensitivity;
+        SaveAimSensitivity();
     }
 
 }
