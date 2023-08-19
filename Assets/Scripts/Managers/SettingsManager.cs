@@ -35,9 +35,12 @@ public class SettingsManager : MonoBehaviour
 
     //Private Fields
 
-	//Initialization Methods
+    private const float m_CooldownDuration = 0.5f;
+    private float m_LastToggleTime;
 
-	private void GetReferences ()
+    //Initialization Methods
+
+    private void GetReferences ()
 	{
 		InitializeSingleton();
 	}
@@ -92,8 +95,13 @@ public class SettingsManager : MonoBehaviour
 
     private void UpdateSettings()
     {
-        if (Input.GetButtonDown("ToggleSettings"))
+        float currentTime = Time.realtimeSinceStartup;
+
+#if UNITY_WEBGL
+        if (Input.GetButtonDown("ToggleSettings") && currentTime - m_LastToggleTime > m_CooldownDuration)
         {
+            m_LastToggleTime = currentTime;
+
             if (IsSettingsUIShown)
             {
                 HideSettingsUI();
@@ -103,6 +111,21 @@ public class SettingsManager : MonoBehaviour
                 ShowSettingsUI();
             }
         }
+#else
+        if (Input.GetButtonDown("ToggleSettings"))
+        {
+            m_LastToggleTime = currentTime;
+
+            if (IsSettingsUIShown)
+            {
+                HideSettingsUI();
+            }
+            else
+            {
+                ShowSettingsUI();
+            }
+        }
+#endif
     }
 
     private void UpdateAimSensitivitySlider()

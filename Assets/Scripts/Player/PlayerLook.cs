@@ -165,11 +165,11 @@ public class PlayerLook : MonoBehaviour
 
     private void UpdateAim()
     {
-        if (Input.GetMouseButtonDown(1) || Input.GetAxis("Aim") > 0.0f)
+        if (Input.GetMouseButton(1) || Input.GetAxis("Aim") > 0.0f)
         {
             StartAiming();
         }
-        else if (Input.GetMouseButtonUp(1) || Input.GetAxis("Aim") == 0.0f)
+        else if (Input.GetAxis("Aim") == 0.0f)
         {
             StopAiming();
         }

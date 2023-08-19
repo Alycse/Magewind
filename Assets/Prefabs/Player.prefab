@@ -3485,6 +3485,7 @@ MonoBehaviour:
   m_HorizontalWindOffsetY: 0.35
   m_ProduceWindSound: {fileID: 1895388138235832178}
   m_PlayerLook: {fileID: 1895388138498903141}
+  m_PlayerMovement: {fileID: 8838925453925198527}
   m_PlayerBodyTransform: {fileID: 8132751650395726702}
   m_PlayerParasol: {fileID: 1895388139035049326}
   m_PlayerBodyAnimator: {fileID: 8132751650395726703}

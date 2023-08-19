@@ -50,9 +50,10 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 MovementInput { private set; get; }
 
+    public bool IsGrounded { private set; get; }
+
     //Private Fields
 
-    private bool m_IsGrounded;
     private float m_OriginalGravity;
 
     //Initialization Methods
@@ -117,13 +118,13 @@ public class PlayerMovement : MonoBehaviour
 
         MovementInput = cameraForward * inputVertical + cameraRight * inputHorizontal;
 
-        m_IsGrounded = Physics.Raycast(transform.position, Vector3.down, m_GroundCheckLength);
+        IsGrounded = Physics.Raycast(transform.position, Vector3.down, m_GroundCheckLength);
 
         if (MovementInput != Vector3.zero)
         {
             m_PlayerLook.RotateBodyToMovement();
 
-            if (!m_PlayerParasol.IsParasolOpen || m_IsGrounded)
+            if (!m_PlayerParasol.IsParasolOpen || IsGrounded)
             {
                 m_PlayerRigidbody.MovePosition(m_PlayerRigidbody.position + MovementInput * m_MoveSpeed * Time.deltaTime);
             }
@@ -145,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
             m_PlayerBodyAnimator.SetBool("isRunning", false);
         }
 
-        if(Mathf.Abs(m_PlayerRigidbody.velocity.y) >= 0.001f || !m_IsGrounded)
+        if(Mathf.Abs(m_PlayerRigidbody.velocity.y) >= 0.01f || !IsGrounded)
         {
             m_PlayerBodyAnimator.SetBool("inAir", true);
         }
@@ -157,7 +158,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateJump()
     {
-        if (Input.GetButtonDown("Jump") && m_IsGrounded)
+        if (Input.GetButtonDown("Jump") && IsGrounded)
         {
             Jump();
         }
@@ -167,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (MovementInput != Vector3.zero)
         {
-            if (m_PlayerParasol.IsParasolOpen && !m_IsGrounded)
+            if (m_PlayerParasol.IsParasolOpen && !IsGrounded)
             {
                 m_PlayerRigidbody.AddForce(MovementInput * m_ParasolMoveSpeed, ForceMode.Acceleration);
             }

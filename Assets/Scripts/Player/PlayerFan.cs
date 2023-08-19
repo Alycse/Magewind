@@ -34,6 +34,9 @@ public class PlayerFan : MonoBehaviour
     private PlayerLook m_PlayerLook;
 
     [SerializeField]
+    private PlayerMovement m_PlayerMovement;
+
+    [SerializeField]
     private Transform m_PlayerBodyTransform;
 
     [SerializeField]
@@ -95,20 +98,23 @@ public class PlayerFan : MonoBehaviour
 
     private void UpdateFan()
     {
-        if (Input.GetButtonDown("ProduceWind"))
+        if(m_PlayerMovement.IsGrounded)
         {
-            if(m_PlayerLook.IsAiming)
+            if (Input.GetButtonDown("ProduceWind"))
             {
-                ProduceAimedWind();
+                if (m_PlayerLook.IsAiming)
+                {
+                    ProduceAimedWind();
+                }
+                else
+                {
+                    ProduceHorizontalWind();
+                }
             }
-            else
+            else if (Input.GetButtonDown("ProduceUpwardWind"))
             {
-                ProduceHorizontalWind();
+                ProduceUpwardWind();
             }
-        }
-        else if (Input.GetButtonDown("ProduceUpwardWind"))
-        {
-            ProduceUpwardWind();
         }
     }
 
