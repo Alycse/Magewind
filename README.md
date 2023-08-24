@@ -42,7 +42,7 @@
 
    ![image](https://github.com/Alycse/Magewind/assets/13681507/1ef77a39-e9f4-4496-8a17-f500f89bbe85)
 
-## How to setup the project (PROPER WAY, can easily get updates)
+## How to setup the project in Unity (PROPER WAY, can easily get updates)
 
 1) Download and Install Github Desktop: https://desktop.github.com/
 
