@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerFan : MonoBehaviour
@@ -7,6 +7,12 @@ public class PlayerFan : MonoBehaviour
     //Settings
 
     [Header("Settings")]
+
+    [SerializeField]
+    private float m_WindCooldownInSeconds;
+
+    [SerializeField]
+    private float m_WindDelayInSeconds;
 
     [SerializeField]
     private float m_AimedWindDistanceToPlayer;
@@ -57,6 +63,8 @@ public class PlayerFan : MonoBehaviour
 
     //Private Fields
 
+    private bool m_IsProducingWind = false;
+
     //Initialization Methods
 
     private void GetReferences()
@@ -98,30 +106,48 @@ public class PlayerFan : MonoBehaviour
 
     private void UpdateFan()
     {
-        if(m_PlayerMovement.IsGrounded)
+        if (!m_IsProducingWind && m_PlayerMovement.IsGrounded)
         {
             if (Input.GetButtonDown("ProduceWind"))
             {
-                if (m_PlayerLook.IsAiming)
-                {
-                    ProduceAimedWind();
-                }
-                else
-                {
-                    ProduceHorizontalWind();
-                }
+                m_IsProducingWind = true;
+                m_PlayerBodyAnimator.SetTrigger("ProduceHorizontalWind");
+                StartCoroutine(ProduceWindWithDelay(m_PlayerLook.IsAiming ? "Aimed" : "Horizontal", m_WindDelayInSeconds));
             }
             else if (Input.GetButtonDown("ProduceUpwardWind"))
             {
-                ProduceUpwardWind();
+                m_IsProducingWind = true;
+                m_PlayerBodyAnimator.SetTrigger("ProduceUpwardWind");
+                StartCoroutine(ProduceWindWithDelay("Upward", m_WindDelayInSeconds));
             }
         }
+    }
+
+    private IEnumerator ProduceWindWithDelay(string type, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        switch (type)
+        {
+            case "Aimed":
+                ProduceAimedWind();
+                break;
+            case "Upward":
+                ProduceUpwardWind();
+                break;
+            case "Horizontal":
+                ProduceHorizontalWind();
+                break;
+        }
+
+        yield return new WaitForSeconds(m_WindCooldownInSeconds);
+
+        m_IsProducingWind = false;
     }
 
     private void ProduceWind()
     {
         m_PlayerLook.RotateBodyToMovement();
-        m_PlayerBodyAnimator.SetTrigger("ProduceHorizontalWind");
         m_ProduceWindSound.Play();
     }
 
