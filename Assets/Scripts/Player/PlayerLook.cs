@@ -12,28 +12,28 @@ public class PlayerLook : MonoBehaviour
     [Header("Settings")]
 
     [SerializeField]
-    private float CameraClampAngle;
+    private float m_CameraClampAngle;
 
     [SerializeField]
-    private float CameraDistanceX;
+    private float m_CameraDistanceX;
 
     [SerializeField]
-    private float CameraDistanceXAiming;
+    private float m_CameraDistanceXAiming;
 
     [SerializeField]
-    private float CameraDistanceY;
+    private float m_CameraDistanceY;
 
     [SerializeField]
-    private float CameraDistanceOffset;
+    private float m_CameraDistanceOffset;
 
     [SerializeField]
-    private float CameraAimOffsetX;
+    private float m_CameraAimOffsetX;
 
     [SerializeField]
-    private float CameraAimPositionChangeSpeed;
+    private float m_CameraAimPositionChangeSpeed;
 
     [SerializeField]
-    private float PlayerBodyTransformRotationSpeed;
+    private float m_PlayerBodyTransformRotationSpeed;
 
     //References
 
@@ -86,7 +86,7 @@ public class PlayerLook : MonoBehaviour
         m_CurLookVerticalRotation = localRotation.x;
         m_CurLookHorizontalRotation = localRotation.y;
 
-        m_CurCameraDistanceX = CameraDistanceX;
+        m_CurCameraDistanceX = m_CameraDistanceX;
 
         m_TargetPlayerBodyTransformRotation = Quaternion.Euler(0.0f, m_CurLookHorizontalRotation, 0.0f);
 
@@ -131,7 +131,7 @@ public class PlayerLook : MonoBehaviour
         m_CurLookHorizontalRotation += (mouseX + analogX) * SettingsManager.Instance.AimSensitivity * Time.deltaTime;
         m_CurLookVerticalRotation -= (mouseY + analogY) * SettingsManager.Instance.AimSensitivity * Time.deltaTime;
 
-        m_CurLookVerticalRotation = Mathf.Clamp(m_CurLookVerticalRotation, -CameraClampAngle, CameraClampAngle);
+        m_CurLookVerticalRotation = Mathf.Clamp(m_CurLookVerticalRotation, -m_CameraClampAngle, m_CameraClampAngle);
 
         Quaternion localRotation = Quaternion.Euler(m_CurLookVerticalRotation, m_CurLookHorizontalRotation, 0.0f);
         transform.rotation = localRotation;
@@ -140,27 +140,27 @@ public class PlayerLook : MonoBehaviour
 
         if (IsAiming)
         {
-            cameraDistanceXToUse = CameraDistanceXAiming;
+            cameraDistanceXToUse = m_CameraDistanceXAiming;
         }
         else
         {
-            cameraDistanceXToUse = CameraDistanceX;
+            cameraDistanceXToUse = m_CameraDistanceX;
         }
 
-        m_CurCameraDistanceX = Mathf.Lerp(m_CurCameraDistanceX, cameraDistanceXToUse, Time.deltaTime * CameraAimPositionChangeSpeed);
+        m_CurCameraDistanceX = Mathf.Lerp(m_CurCameraDistanceX, cameraDistanceXToUse, Time.deltaTime * m_CameraAimPositionChangeSpeed);
 
-        float distanceToBody = Mathf.Lerp(m_CurCameraDistanceX, CameraDistanceY, m_CurLookVerticalRotation / CameraClampAngle);
+        float distanceToBody = Mathf.Lerp(m_CurCameraDistanceX, m_CameraDistanceY, m_CurLookVerticalRotation / m_CameraClampAngle);
 
-        float targetAimOffsetX = IsAiming ? CameraAimOffsetX : 0f;
-        m_CurrentAimOffsetX = Mathf.Lerp(m_CurrentAimOffsetX, targetAimOffsetX, Time.deltaTime * CameraAimPositionChangeSpeed);
+        float targetAimOffsetX = IsAiming ? m_CameraAimOffsetX : 0f;
+        m_CurrentAimOffsetX = Mathf.Lerp(m_CurrentAimOffsetX, targetAimOffsetX, Time.deltaTime * m_CameraAimPositionChangeSpeed);
         Vector3 aimingOffset = transform.right * m_CurrentAimOffsetX;
 
-        transform.position = m_PlayerBodyTransform.position - transform.forward * distanceToBody + Vector3.up * CameraDistanceOffset + aimingOffset;
+        transform.position = m_PlayerBodyTransform.position - transform.forward * distanceToBody + Vector3.up * m_CameraDistanceOffset + aimingOffset;
     }
 
     private void UpdateRotation()
     {
-        m_PlayerBodyTransform.rotation = Quaternion.Lerp(m_PlayerBodyTransform.rotation, m_TargetPlayerBodyTransformRotation, PlayerBodyTransformRotationSpeed * Time.deltaTime);
+        m_PlayerBodyTransform.rotation = Quaternion.Lerp(m_PlayerBodyTransform.rotation, m_TargetPlayerBodyTransformRotation, m_PlayerBodyTransformRotationSpeed * Time.deltaTime);
     }
 
     private void UpdateAim()

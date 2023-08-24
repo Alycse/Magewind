@@ -9138,14 +9138,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8df88ede12582941af5a9f33c446ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraClampAngle: 65
-  CameraDistanceX: 3
-  CameraDistanceXAiming: 0.85
-  CameraDistanceY: 1.45
-  CameraDistanceOffset: 0.315
-  CameraAimOffsetX: 0.175
-  CameraAimPositionChangeSpeed: 10
-  PlayerBodyTransformRotationSpeed: 15
+  m_CameraClampAngle: 65
+  m_CameraDistanceX: 3
+  m_CameraDistanceXAiming: 0.85
+  m_CameraDistanceY: 1.45
+  m_CameraDistanceOffset: 0.315
+  m_CameraAimOffsetX: 0.175
+  m_CameraAimPositionChangeSpeed: 10
+  m_PlayerBodyTransformRotationSpeed: 15
   m_PlayerBodyTransform: {fileID: 1500474127}
   m_PlayerRigidbody: {fileID: 3606635571150349870}
   m_PlayerMovement: {fileID: 3606635571150349857}
