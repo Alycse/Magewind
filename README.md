@@ -16,7 +16,7 @@
    
    ![image](https://github.com/Alycse/Magewind/assets/13681507/c94dbb76-cc91-4b56-b254-11f60cbb8dd2)
 
-## How to setup the project (EASY WAY)
+## How to setup the project in Unity (EASY WAY, but you won't get updates)
 
 1) Download the zip of the repo
 
@@ -42,13 +42,13 @@
 
    ![image](https://github.com/Alycse/Magewind/assets/13681507/1ef77a39-e9f4-4496-8a17-f500f89bbe85)
 
-## How to setup the project (PROPER WAY)
+## How to setup the project (PROPER WAY, can easily get updates)
 
 1) Download and Install Github Desktop: https://desktop.github.com/
 
 2) You probably need to create a github account or something, I forgot. Just do whatever it asks.
 
-3) Click File, then Clone Repository
+3) Click File, then Clone Repository.
 
    ![image](https://github.com/Alycse/Magewind/assets/13681507/2b82fc02-f239-4d43-9036-31bbf794758b)
 
@@ -56,21 +56,25 @@
 
    ![image](https://github.com/Alycse/Magewind/assets/13681507/d87b951c-8707-4b67-8397-1d6a85460f8d)
 
-5) Set the local path to wherever you want to save the project, then click Clone
+5) Set the local path to wherever you want to save the project, then click Clone.
 
-6) Once Cloned, go to Unity Hub then click Open
+6) Once Cloned, go to Unity Hub then click Open.
 
-7) Find the project folder (the one you just cloned), then click Open
+7) Find the project folder (the one you just cloned), then click Open.
 
    ![image](https://github.com/Alycse/Magewind/assets/13681507/509297f4-01cb-43da-9ea1-df8d6e12473c)
 
-8) Once the project has been loaded to the Unity Editor, find the Project Window, find Assets, open Scenes, then double click Gym 2
+8) Once the project has been loaded to the Unity Editor, find the Project Window, find Assets, open Scenes, then double click Gym 2.
 
    ![image](https://github.com/Alycse/Magewind/assets/13681507/5407b593-1e2e-4998-9975-1ce2085a97c6)
 
-9) Click the play button to play Gym 2
+9) Click the play button to play Gym 2.
 
    ![image](https://github.com/Alycse/Magewind/assets/13681507/1ef77a39-e9f4-4496-8a17-f500f89bbe85)
+
+10) If there are any updates, it will show up in Github Desktop. Click Fetch to get the new changes, then click Pull to merge them with your current local project.
+
+    ![image](https://github.com/Alycse/Magewind/assets/13681507/4ad4bfbb-1e6c-4ac0-95e1-474a5dac18b6)
 
 ## Other Info
 
