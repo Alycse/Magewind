@@ -30,7 +30,7 @@ public class PlayerFan : MonoBehaviour
     private float m_HorizontalWindOffsetY;
 
     [SerializeField]
-    private AudioSource m_ProduceWindSound;
+    private AudioSource m_ProduceWindSound, m_AimSwosh, m_HorizontalSwosh, m_UpwardSwosh;
 
     //References
 
@@ -148,12 +148,31 @@ public class PlayerFan : MonoBehaviour
     private void ProduceWind()
     {
         m_PlayerLook.RotateBodyToMovement();
-        m_ProduceWindSound.Play();
+        //m_ProduceWindSound.Play();
+    }
+
+    private void PlaySwosh(int wind)
+    {
+
+        if (wind == 1)
+        {
+            m_AimSwosh.Play();
+        }
+        else if(wind == 2)
+        {
+            m_UpwardSwosh.Play();
+        }
+        else if (wind == 3)
+        {
+            m_HorizontalSwosh.Play();
+        }
+        
     }
 
     private void ProduceAimedWind()
     {
         ProduceWind();
+        PlaySwosh(1);
 
         Quaternion windRotation = m_PlayerLook.transform.rotation;
         Vector3 offsetFromPlayer = m_PlayerLook.transform.forward * m_AimedWindDistanceToPlayer;
@@ -165,6 +184,7 @@ public class PlayerFan : MonoBehaviour
     private void ProduceUpwardWind()
     {
         ProduceWind();
+        PlaySwosh(2);
 
         Quaternion windRotation = Quaternion.Euler(-90, 0, 0);
 
@@ -180,6 +200,7 @@ public class PlayerFan : MonoBehaviour
     private void ProduceHorizontalWind()
     {
         ProduceWind();
+        PlaySwosh(3);
 
         Vector3 playerLookForward = m_PlayerBodyTransform.transform.forward;
         playerLookForward.y = 0.0f;
