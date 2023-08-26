@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerParasol))]
@@ -29,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     float m_SlideAnimationVelocityOffset;
+
+    [SerializeField]
+    private AudioSource m_Jump1, m_Jump2, m_Jump3;
 
     //References
 
@@ -188,8 +192,28 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void JumpSound()
+    {
+        //Random r = new Random();
+        int rInt = Random.Range(1, 4);
+
+        if (rInt == 1)
+        {
+            m_Jump1.Play();
+        }
+        else if (rInt == 2)
+        {
+            m_Jump2.Play();
+        }
+        else if (rInt == 3)
+        {
+            m_Jump3.Play();
+        }
+    }
+
     private void Jump()
     {
+        JumpSound();
         m_PlayerRigidbody.velocity = new Vector3(m_PlayerRigidbody.velocity.x, 0.0f, m_PlayerRigidbody.velocity.z);
         m_PlayerRigidbody.AddForce(Vector3.up * m_JumpForce, ForceMode.Impulse);
     }
