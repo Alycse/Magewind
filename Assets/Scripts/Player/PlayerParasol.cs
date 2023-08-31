@@ -12,12 +12,6 @@ public class PlayerParasol : MonoBehaviour
     [Header("References")]
 
     [SerializeField]
-    private MeshRenderer m_OpenedParasolMeshRenderer;
-
-    [SerializeField]
-    private MeshRenderer m_ClosedParasolMeshRenderer;
-
-    [SerializeField]
     private AudioSource m_OpenParasol, m_CloseParasol;
 
     //Events
@@ -83,15 +77,11 @@ public class PlayerParasol : MonoBehaviour
     {
         m_OpenParasol.Play();
         IsParasolOpen = true;
-        m_OpenedParasolMeshRenderer.enabled = true;
-        m_ClosedParasolMeshRenderer.enabled = false;
     }
 
     private void CloseParasol()
     {
         m_CloseParasol.Play();
         IsParasolOpen = false;
-        m_OpenedParasolMeshRenderer.enabled = false;
-        m_ClosedParasolMeshRenderer.enabled = true;
     }
 }

@@ -216,5 +216,6 @@ public class PlayerMovement : MonoBehaviour
         JumpSound();
         m_PlayerRigidbody.velocity = new Vector3(m_PlayerRigidbody.velocity.x, 0.0f, m_PlayerRigidbody.velocity.z);
         m_PlayerRigidbody.AddForce(Vector3.up * m_JumpForce, ForceMode.Impulse);
+        m_PlayerBodyAnimator.SetTrigger("Jump");
     }
 }

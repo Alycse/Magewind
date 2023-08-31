@@ -217,7 +217,7 @@ public class PlayerFan : MonoBehaviour
 
     private void HideFan()
     {
-        m_FanMeshRenderer.enabled = false;
+        //m_FanMeshRenderer.enabled = false;
     }
 
 }
