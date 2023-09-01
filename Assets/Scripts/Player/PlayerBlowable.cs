@@ -36,7 +36,6 @@ public class PlayerBlowable : Blowable
         {
             if (m_PlayerParasol.IsParasolOpen)
             {
-                Debug.Log("Test 2");
                 m_BlowableRigidbody.AddForce(Vector3.up * 1.0f, ForceMode.Impulse);
             }
         }

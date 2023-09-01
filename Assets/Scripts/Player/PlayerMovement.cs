@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        m_OriginalGravity = Physics.gravity.y * 2.0f;
+        m_OriginalGravity = Physics.gravity.y * 1.7f;
         FallTime = 0.0f;
     }
 
