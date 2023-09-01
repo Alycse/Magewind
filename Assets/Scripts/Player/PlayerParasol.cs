@@ -20,6 +20,9 @@ public class PlayerParasol : MonoBehaviour
     [SerializeField]
     private Animator m_PlayerBodyAnimator;
 
+    [SerializeField]
+    private PlayerMovement m_PlayerMovement;
+
     //Events
 
     //Public Fields
@@ -92,8 +95,11 @@ public class PlayerParasol : MonoBehaviour
 
         if (m_PlayerBlowable.IsInWind())
         {
-            Debug.Log("Test");
             m_BlowableRigidbody.AddForce(Vector3.up * 1.0f, ForceMode.Impulse);
+        }
+        else if(!m_PlayerMovement.IsGrounded && m_PlayerMovement.FallTime >= 0.8f)
+        {
+            m_BlowableRigidbody.AddForce(Vector3.up * 20.0f, ForceMode.Impulse);
         }
     }
 

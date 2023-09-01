@@ -53,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsGrounded { private set; get; }
 
+    public float FallTime { private set; get; }
+
     //Private Fields
 
     private float m_OriginalGravity;
@@ -81,7 +83,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        m_OriginalGravity = Physics.gravity.y;
+        m_OriginalGravity = Physics.gravity.y * 2.0f;
+        FallTime = 0.0f;
     }
 
     private void Update()
@@ -89,6 +92,15 @@ public class PlayerMovement : MonoBehaviour
         if (SettingsManager.Instance.IsSettingsUIShown)
         {
             return;
+        }
+
+        if(m_PlayerRigidbody.velocity.y < 0.0f)
+        {
+            FallTime += Time.deltaTime;
+        }
+        else if(FallTime != 0.0f)
+        {
+            FallTime = 0.0f;
         }
 
         UpdateMovement();
@@ -182,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!m_PlayerBlowable.IsInWind())
         {
-            float gravityForce = m_PlayerParasol.IsParasolOpen ? m_OriginalGravity * m_ParasolGravityScale : m_OriginalGravity;
+            float gravityForce = m_PlayerParasol.IsParasolOpen && m_PlayerRigidbody.velocity.y <= 0.0f ? m_OriginalGravity * m_ParasolGravityScale : m_OriginalGravity;
             m_PlayerRigidbody.AddForce(new Vector3(0, gravityForce, 0), ForceMode.Acceleration);
         }
         else if (!m_PlayerParasol.IsParasolOpen)
