@@ -24,13 +24,25 @@ public class PlayerBlowable : Blowable
         m_PlayerParasol = GetComponent<PlayerParasol>();
     }
 
-	//Play Methods
+    //Play Methods
 
-	//Public Methods
+    //Public Methods
 
-	//Private Methods
+    //Private Methods
 
-	protected override void UpdateWind()
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Wind"))
+        {
+            if (m_PlayerParasol.IsParasolOpen)
+            {
+                Debug.Log("Test 2");
+                m_BlowableRigidbody.AddForce(Vector3.up * 1.0f, ForceMode.Impulse);
+            }
+        }
+    }
+
+    protected override void UpdateWind()
     {
         // This is a hack because Unity's physics is retarded
         m_BlowableRigidbody.rotation = Quaternion.Euler(0, 0, 0);

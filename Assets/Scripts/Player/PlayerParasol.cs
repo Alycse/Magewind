@@ -12,7 +12,13 @@ public class PlayerParasol : MonoBehaviour
     [Header("References")]
 
     [SerializeField]
-    private AudioSource m_OpenParasol, m_CloseParasol;
+    private PlayerBlowable m_PlayerBlowable;
+
+    [SerializeField]
+    protected Rigidbody m_BlowableRigidbody;
+
+    [SerializeField]
+    private Animator m_PlayerBodyAnimator;
 
     //Events
 
@@ -65,23 +71,35 @@ public class PlayerParasol : MonoBehaviour
     {
         if (Input.GetButtonDown("OpenParasol") || Input.GetAxis("OpenParasol") > 0.0f)
         {
-            OpenParasol();
+            if (!IsParasolOpen)
+            {
+                OpenParasol();
+            }
         }
         else if (Input.GetButtonUp("OpenParasol") || Input.GetAxis("OpenParasol") == 0.0f)
         {
-            CloseParasol();
+            if (IsParasolOpen)
+            {
+                CloseParasol();
+            }
         }
     }
 
     private void OpenParasol()
     {
-        m_OpenParasol.Play();
         IsParasolOpen = true;
+        m_PlayerBodyAnimator.SetBool("isParasolOpen", true);
+
+        if (m_PlayerBlowable.IsInWind())
+        {
+            Debug.Log("Test");
+            m_BlowableRigidbody.AddForce(Vector3.up * 1.0f, ForceMode.Impulse);
+        }
     }
 
     private void CloseParasol()
     {
-        m_CloseParasol.Play();
         IsParasolOpen = false;
+        m_PlayerBodyAnimator.SetBool("isParasolOpen", false);
     }
 }
